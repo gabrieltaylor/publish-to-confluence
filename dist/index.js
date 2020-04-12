@@ -54,21 +54,55 @@ module.exports = require("os");
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
 const core = __webpack_require__(470);
-const wait = __webpack_require__(949);
-
 
 // most @actions toolkit packages have async methods
 async function run() {
-  try { 
-    const ms = core.getInput('milliseconds');
-    console.log(`Waiting ${ms} milliseconds ...`)
+  try {
+    const https = __webpack_require__(211)
 
-    core.debug((new Date()).toTimeString())
-    wait(parseInt(ms));
-    core.debug((new Date()).toTimeString())
+    const data = JSON.stringify({
+      type: core.getInput('type'),
+      title: core.getInput('title'),
+      space: {key: core.getInput('space')},
+      body: {
+        storage: {
+          value: core.getInput('body'),
+          representation: core.getInput('representation')
+        }
+      }
+    })
 
-    core.setOutput('time', new Date().toTimeString());
-  } 
+    core.debug(data)
+
+    const options = {
+      hostname: core.getInput('hostname'),
+      port: 443,
+      path: '/wiki/rest/api/content/',
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + new Buffer(core.getInput('username') + ':' + process.env.CONFLUENCE_API_TOKEN).toString('base64'),
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+      }
+    }
+
+    core.debug(options)
+
+    const req = https.request(options, res => {
+      core.debug(`statusCode: ${res.statusCode}`)
+
+      res.on('data', response_data => {
+        core.setOutput('reponse', reponse_data)
+      })
+    })
+
+    req.on('error', error => {
+      core.setFailed(error.message);
+    })
+
+    req.write(data)
+    req.end()
+  }
   catch (error) {
     core.setFailed(error.message);
   }
@@ -76,6 +110,13 @@ async function run() {
 
 run()
 
+
+/***/ }),
+
+/***/ 211:
+/***/ (function(module) {
+
+module.exports = require("https");
 
 /***/ }),
 
@@ -340,24 +381,6 @@ exports.group = group;
 /***/ (function(module) {
 
 module.exports = require("path");
-
-/***/ }),
-
-/***/ 949:
-/***/ (function(module) {
-
-let wait = function(milliseconds) {
-  return new Promise((resolve, reject) => {
-    if (typeof(milliseconds) !== 'number') { 
-      throw new Error('milleseconds not a number'); 
-    }
-
-    setTimeout(() => resolve("done!"), milliseconds)
-  });
-}
-
-module.exports = wait;
-
 
 /***/ })
 
