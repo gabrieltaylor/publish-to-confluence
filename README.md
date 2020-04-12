@@ -1,28 +1,29 @@
-
 <p align="center">
   <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
 </p>
 
-# Create a JavaScript Action
+# Publish content to Confluence
+This action publishes content to a Confluence site.
 
-Use this template to bootstrap the creation of a JavaScript action.:rocket:
+## Confluence REST API
 
-This template includes tests, linting, a validation workflow, publishing, and versioning guidance.  
+```
+curl -u admin@example.com:api_token \
+  -X POST \
+  -H 'Content-Type: application/json' \
+  -d'{"type":"page","title":"new page","space":{"key":"TST"},"body":{"storage":{"value":"<p>This is a new page</p>","representation":"storage"}}}' \
+  https://your-domain.atlassian.net/wiki/rest/api/content/
+```
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+## Contributing
+### Set up
 
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
-
-## Code in Master
-
-Install the dependencies  
+Install the dependencies
 ```bash
 $ npm install
 ```
 
-Run the tests :heavy_check_mark:  
+Run the tests :heavy_check_mark:
 ```bash
 $ npm test
 
@@ -33,36 +34,6 @@ $ npm test
 
 ...
 ```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-const core = require('@actions/core');
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
 
 ## Package for distribution
 
@@ -97,7 +68,7 @@ $ git commit -a -m "v1 release"
 $ git push origin v1
 ```
 
-Your action is now published! :rocket: 
+Your action is now published! :rocket:
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 
@@ -106,9 +77,16 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 You can now consume the action by referencing the v1 branch
 
 ```yaml
-uses: actions/javascript-action@v1
+uses: actions/publish-to-confluence@v1
+env:
+  CONFLUENCE_API_TOKEN: ${{ secrets.CONFLUENCE_API_TOKEN }}
 with:
-  milliseconds: 1000
+  type: 'page'
+  title: 'Page created by Github Action'
+  body: 'Content added by Github Action'
+  space: 'ENG'
+  hostname: 'example.atlassian.net'
+  username: 'me@example.com'
 ```
 
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
+See the [actions tab](https://github.com/actions/publish-to-confluence/actions) for runs of this action! :rocket:

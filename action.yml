@@ -1,13 +1,34 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Publish to Confluence'
+description: 'Publish a new page to a Confluence site'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  type:
+    description: 'Confluence content type'
     required: true
-    default: '1000'
+    default: 'page'
+  title:
+    description: 'Confluence content title'
+    required: true
+  body:
+    description: 'Confluence content body'
+    required: true
+  representation:
+    description: 'Confluence content representation'
+    required: true
+    default: 'storage'
+  space:
+    description: 'Confluence space key'
+    required: true
+  hostname:
+    description: 'Confluence hostname'
+    required: true
+  api_token:
+    description: 'Confluence API token'
+    required: true
+  email:
+    description: 'Confluence API user email'
 outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+  reponse: # output will be available to future steps
+    description: 'The response from the Confluence API'
 runs:
   using: 'node12'
   main: 'dist/index.js'
