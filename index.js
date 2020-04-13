@@ -24,7 +24,7 @@ async function run() {
       path: '/wiki/rest/api/content/',
       method: 'POST',
       headers: {
-        'Authorization': 'Basic ' + new Buffer(core.getInput('username') + ':' + process.env.CONFLUENCE_API_TOKEN).toString('base64'),
+        'Authorization': 'Basic ' + new Buffer.from(core.getInput('username') + ':' + process.env.CONFLUENCE_API_TOKEN).toString('base64'),
         'Content-Type': 'application/json',
         'Content-Length': data.length
       }
@@ -36,7 +36,7 @@ async function run() {
       core.debug(`statusCode: ${res.statusCode}`)
 
       res.on('data', response_data => {
-        core.setOutput('reponse', reponse_data)
+        core.setOutput('response', response_data)
       })
     })
 
