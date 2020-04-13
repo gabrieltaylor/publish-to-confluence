@@ -59,10 +59,11 @@ const https = __webpack_require__(211);
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    const data = JSON.stringify({
+    let data = JSON.stringify({
       type: core.getInput('type'),
       title: core.getInput('title'),
       space: {key: core.getInput('space')},
+      ancestors: [{id: core.getInput('parent_id')}],
       body: {
         storage: {
           value: core.getInput('body'),
