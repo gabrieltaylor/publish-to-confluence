@@ -12,7 +12,7 @@ async function convertToConfluenceMarkup(markdown) {
     core.debug(options)
 
     return fetch(url, options)
-      .then(response => response.json())
+      .then(response => response.text())
       .then(data => {
         core.debug(data)
         return data;
