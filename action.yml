@@ -21,8 +21,9 @@ inputs:
   hostname:
     description: 'Confluence hostname'
     required: true
-  email:
+  username:
     description: 'Confluence API user email'
+    required: true
 outputs:
   reponse: # output will be available to future steps
     description: 'The response from the Confluence API'
