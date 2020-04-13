@@ -6,7 +6,7 @@ async function convertToConfluenceMarkup(markdown) {
 
     core.debug(data)
 
-    const url = buildUrl('/rest/tinymce/1/markdownxhtmlconverter')
+    const url = buildUrl('/wiki/rest/tinymce/1/markdownxhtmlconverter')
     const options = buildOptions(data)
 
     core.debug(options)
@@ -67,7 +67,7 @@ function buildUrl(path) {
 async function run() {
   try {
     markup = await convertToConfluenceMarkup(core.getInput('body'));
-    reponse = await publishToConfluence(markup);
+    response = await publishToConfluence(markup);
     core.setOutput('response', response);
   }
   catch (error) {
