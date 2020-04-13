@@ -18,6 +18,8 @@ inputs:
   space:
     description: 'Confluence space key'
     required: true
+  parent_id:
+    description: 'ID of parent page in Confluence'
   hostname:
     description: 'Confluence hostname'
     required: true

@@ -2,9 +2,13 @@ const core = require('@actions/core');
 const https = require('https');
 
 // most @actions toolkit packages have async methods
+function maybeInjectAncestors(data) {
+  return (core.getInput('parent_id') ? {...data, ...{ancestors: [{id: core.getInput('parent_id')}]}} : data);
+};
+
 async function run() {
   try {
-    const data = JSON.stringify({
+    let data = {
       type: core.getInput('type'),
       title: core.getInput('title'),
       space: {key: core.getInput('space')},
@@ -14,7 +18,11 @@ async function run() {
           representation: core.getInput('representation')
         }
       }
-    })
+    }
+
+    data = maybeInjectAncestors(data);
+
+    data = JSON.stringify(data);
 
     core.debug(data)
 
