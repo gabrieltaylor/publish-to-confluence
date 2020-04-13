@@ -1,7 +1,3 @@
-<p align="center">
-  <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
-</p>
-
 # Publish content to Confluence
 This action publishes content to a Confluence site.
 
@@ -53,25 +49,6 @@ Since the packaged index.js is run from the dist folder.
 git add dist
 ```
 
-## Create a release branch
-
-Users shouldn't consume the action from master since that would be latest code and actions can break compatibility between major versions.
-
-Checkin to the v1 release branch
-
-```bash
-$ git checkout -b v1
-$ git commit -a -m "v1 release"
-```
-
-```bash
-$ git push origin v1
-```
-
-Your action is now published! :rocket:
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
 ## Usage
 
 You can now consume the action by referencing the v1 branch
@@ -88,5 +65,3 @@ with:
   hostname: 'example.atlassian.net'
   username: 'me@example.com'
 ```
-
-See the [actions tab](https://github.com/actions/publish-to-confluence/actions) for runs of this action! :rocket:
