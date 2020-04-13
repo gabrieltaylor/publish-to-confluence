@@ -54,12 +54,11 @@ module.exports = require("os");
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
 const core = __webpack_require__(470);
+const https = __webpack_require__(211);
 
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    const https = __webpack_require__(211)
-
     const data = JSON.stringify({
       type: core.getInput('type'),
       title: core.getInput('title'),
@@ -80,7 +79,7 @@ async function run() {
       path: '/wiki/rest/api/content/',
       method: 'POST',
       headers: {
-        'Authorization': 'Basic ' + new Buffer(core.getInput('username') + ':' + process.env.CONFLUENCE_API_TOKEN).toString('base64'),
+        'Authorization': 'Basic ' + new Buffer.from(core.getInput('username') + ':' + process.env.CONFLUENCE_API_TOKEN).toString('base64'),
         'Content-Type': 'application/json',
         'Content-Length': data.length
       }
@@ -92,7 +91,7 @@ async function run() {
       core.debug(`statusCode: ${res.statusCode}`)
 
       res.on('data', response_data => {
-        core.setOutput('reponse', reponse_data)
+        core.setOutput('response', response_data)
       })
     })
 
