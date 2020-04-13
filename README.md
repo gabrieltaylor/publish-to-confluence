@@ -77,7 +77,7 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 You can now consume the action by referencing the v1 branch
 
 ```yaml
-uses: actions/publish-to-confluence@v1
+uses: gabrieltaylor/publish-to-confluence@v1
 env:
   CONFLUENCE_API_TOKEN: ${{ secrets.CONFLUENCE_API_TOKEN }}
 with:

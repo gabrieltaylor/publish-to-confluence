@@ -1,10 +1,9 @@
 const core = require('@actions/core');
+const https = require('https');
 
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    const https = require('https')
-
     const data = JSON.stringify({
       type: core.getInput('type'),
       title: core.getInput('title'),

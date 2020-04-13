@@ -21,9 +21,6 @@ inputs:
   hostname:
     description: 'Confluence hostname'
     required: true
-  api_token:
-    description: 'Confluence API token'
-    required: true
   email:
     description: 'Confluence API user email'
 outputs:
